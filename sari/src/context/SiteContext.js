@@ -1,6 +1,6 @@
-import { createContext,useState } from "react";
+import { createContext,useContext,useState } from "react";
 
-export const Context = createContext()
+ const Context = createContext()
 
 const Provider = ({children})=>{
     const [theme,setTheme] = useState('light')
@@ -17,5 +17,7 @@ const Provider = ({children})=>{
         </Context.Provider>
     )
 }
+
+export const useSite = () => useContext(Context)
 
 export default Provider
