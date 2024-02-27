@@ -1,25 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import './index.css';
+import Button from './components/Button';
+import Tab from './components/Tab';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h3>{process.env.REACT_APP_API_URL}</h3>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Ramazan T</h1>
+      <div style={{padding:20}}>
+        <Tab activeTab={1}>
+          <Tab.Panel title="Profil">1. Tab</Tab.Panel>
+          <Tab.Panel title="Hakkında">2. Tab</Tab.Panel>
+          <Tab.Panel title="Ayarlar">3. Tab</Tab.Panel>
+        </Tab>
+        </div>
+      <Button text="Buton Örneği" variant="success"/>
+    </>
   );
 }
 
