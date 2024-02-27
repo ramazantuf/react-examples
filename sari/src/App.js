@@ -1,7 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import './index.css';
-import { useState,useReducer } from 'react';
+import { useState,useReducer,useCallback } from 'react';
+import Header from './components/Header';
+import AddTodo from './components/AddTodo';
+import Todos from './components/Todos';
 
 function reducer(state,action){
   console.log(state,action)
@@ -25,15 +28,17 @@ function reducer(state,action){
 }
 
 function App() {
+  const [count,setCount] = useState(0)
   const [state,dispatch] = useReducer(reducer,{
     todos: [],
     todo: ''
 
   });
- const [todos, setTodos] = useState([])
- const [todo, setTodo] = useState()
+ //const [todos, setTodos] = useState([])
+ //const [todo, setTodo] = useState()
+ 
 
- const submitHandle = e=>{
+ const submitHandle = useCallback(e=>{
   e.preventDefault()
   //setTodos([...todos, todo])
  // setTodo('')
@@ -41,29 +46,25 @@ function App() {
   type:'ADD_TODO',
   todo: state.todo
  })
- }
+ },[])
 
- const onChange = e=>{
+ const onChange = useCallback(e=>{
   dispatch({
     type: 'SET_TODO',
     value: e.target.value
   })
- }
+ })
 
   return (
     <>
+    <Header/>
+    <h3>{count}</h3>
+      <button onClick={()=>setCount(count=>count+1)}>Arttır</button>
+      <hr/>
       <h1>Todo App</h1>
-      <form onSubmit={submitHandle}>
-        <input type='text' value={state.todo} onChange={onChange}/>
-        <button disabled={!state.todo} type='submit'>Ekle</button>
-      </form>
-      <ul>
-        {state.todos.map((todo,index)=>(
-          <li key={index}>
-            {todo}
-          </li>
-        ))}
-      </ul>
+      
+      <AddTodo onChange={onChange} submitHandle={submitHandle} todo={state.todo}/>
+      <Todos todos={state.todos}/>
     </>
   );
 }
