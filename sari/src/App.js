@@ -4,16 +4,22 @@ import './index.css';
 import { useEffect, useState } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import SiteContext from './context/SiteContext';
+import Home from './components/Home';
 
 function App() {
   const [theme,setTheme] = useState('light')
   const [language,setLanguage] = useState('tr')
+  const data = {
+    theme,
+    setTheme,
+    language,
+    setLanguage
+  }
    return (
-    <>
-    <Header theme={theme} setTheme={setTheme} language={language} setLanguage={setLanguage}/>
-    APP
-    <Footer theme={theme} setTheme={setTheme} language={language} setLanguage={setLanguage}/>
-    </>
+    <SiteContext.Provider value={data}>
+    <Home/>
+    </SiteContext.Provider>
   );
 }
 
