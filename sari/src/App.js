@@ -1,83 +1,38 @@
 //import logo from './logo.svg';
 import './App.css';
 import './index.css';
-import { useEffect,useState } from 'react';
-import { PostService,UserService } from './services';
+import { Route,Routes,Link,NavLink } from 'react-router-dom';
+import Contact from './pages/Contact';
+import BlogLayout from './pages/blog';
+import Home from './pages/Home';
+import Kategoriler from './pages/blog/Kategoriler';
+import Post from './pages/blog/Post';
+import Blog from './pages/blog/Blog';
+import Page404 from './pages/Page404';
+import Blog404 from './pages/blog/Blog404';
 function App() {
-
-  /**
-   * servis yazılmadan önceki post işlemleri
-   * const [users,setUsers] =useState(false)
-  const [name,setName] = useState('ramazan')
-  const [avatar,setAvatar] = useState(false)
-  const addPost = data =>{
-    fetch('https://jsonplaceholder.typicode.com/posts',{
-      method: 'POST',
-      body:JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(err => console.log(err))
-  }
-useEffect(()=>{
-  fetch('https://jsonplaceholder.typicode.com/users')
-  .then(res =>{
-    if(res.ok && res.status==200){
-      return res.json()
-    }
-  })
-  .then(data=>setUsers(data))
-  .catch(err=>console.log(err))
-
-  addPost({
-    userId:1,
-    title: 'Post Örneği',
-    body: 'Post içeriği'
-  })
-},[]);
-
-const submitHandle = e=>{
-  e.preventDefault()
-  const form={name,avatar}
-  const formData = new FormData()
-  formData.append('name',name)
-  formData.append('avatar',avatar)
-  fetch('https://jsonplaceholder.typicode.com/posts',{
-    method: 'POST',
-    body: formData
-  }).then(res => res.json()).then(data=>console.log(data)).catch(err=>console.log(err))
-  }
-*/
-useEffect(()=>{
-  PostService.getPosts().then(res=>console.log(res))
-  PostService.getPostsDetail(2).then(res => console.log(res))
-  PostService.newPost({
-    userId: 3,
-    title: 'test',
-    body: 'test'
-  }).then(res=>console.log(res))
-  UserService.getUsers().then(res => console.log(res))
-})
-
 
    return (
     <>
-      App
-      {/*
-      servis öncesi view
-      <form onSubmit={submitHandle}>
-        <input type='text' name="name" value={name} onChange={e=>setName(e.target.value)}/>
-        <input type="file" name='avatar' onChange={e=>setAvatar(e.target.files[0])}/>
-        <button className='bg-violet-500 hover:bg-violet-600 text-white rounded-full p-2' type='submit' disabled={!name || !avatar}>Kaydet</button>
-      </form>
-      <h1>User List</h1>
-      <ul className='p-1 m-1'>
-        {users && users.map(user=>(
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
-      <button className='bg-yellow-100 p-1 m-1' >arttır</button>
-        */}
+    <nav>
+      <NavLink to='/' className={({isActive})=>isActive && 'aktif'}>Anasayfa</NavLink>
+      <NavLink to='/contact' style={({isActive})=>({
+        backgroundColor: isActive ? 'red' : 'yellow'
+      })}>Contact</NavLink>
+      <NavLink to='/blog'>Blog</NavLink>
+    </nav>
+    <Routes>
+      <Route path='/' element={<Home/>} />
+      <Route path='/contact' element={<Contact/>} />
+      <Route path='/blog' element={<BlogLayout/>} >
+        <Route index={true} element={<Blog/>}/>
+        <Route path='kategoriler' element={<Kategoriler/>}/>
+        <Route path='post/:id/:url' element={<Post/>}/>
+        <Route path='*' element={<Blog404/>}/>
+      </Route>
+      <Route path='*' element={<Page404/>}/>
+      
+    </Routes>
     </>
   );
 }
