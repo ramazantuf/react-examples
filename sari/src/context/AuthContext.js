@@ -1,12 +1,12 @@
 import { createContext,useContext,useReducer } from "react";
-import siteReducer from '../reducer/siteReducer';
+import authReducer from '../reducer/authReducer';
  const Context = createContext()
 
 const Provider = ({children})=>{
-    const [state,dispatch] = useReducer(siteReducer,{
-        theme:'light',
-        language: 'tr'
+    const [state,dispatch] = useReducer(authReducer,{
+        user:false
     })
+    
     const data = {
         ...state,
         dispatch
@@ -18,6 +18,6 @@ const Provider = ({children})=>{
     )
 }
 
-export const useSite = () => useContext(Context)
+export const useAuth = () => useContext(Context)
 
 export default Provider
