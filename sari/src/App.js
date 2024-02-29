@@ -1,7 +1,7 @@
 //import logo from './logo.svg';
 import './App.css';
 import './index.css';
-import { Route,Routes,Link,NavLink } from 'react-router-dom';
+import { Route,Routes } from 'react-router-dom';
 import Contact from './pages/Contact';
 import BlogLayout from './pages/blog';
 import Home from './pages/Home';
